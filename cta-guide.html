@@ -19,121 +19,747 @@
   <section class="hero">
     <div class="hero-content">
       <div class="hero-tag">Module 03</div>
+<title>Proper Way of Creating CTA Slide — Zagged</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --periwinkle: #8B8BF5;
+      --periwinkle-light: #A5A5F7;
+      --cream: #FAF5EE;
+      --cream-card: #F5EDE0;
+      --white: #FFFFFF;
+      --black: #1A1A1A;
+      --border: #1A1A1A;
+      --text-secondary: #6B6560;
+      --peach: #F5C5B0;
+      --pink: #F2A4D0;
+      --pink-soft: #FDEEF7;
+      --lime: #C5E04B;
+      --lime-soft: #F0F7D0;
+      --yellow: #F5D76E;
+      --yellow-soft: #FFF8E0;
+      --red: #D94130;
+      --red-soft: #FDEEEC;
+      --green: #2D8C5A;
+      --green-soft: #E8F7EF;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    .nav {
+      padding: 20px 32px;
+      display: flex;
+      justify-content: center;
+      position: sticky;
+      top: 12px;
+      z-index: 100;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 28px;
+      background: var(--cream);
+      border: 2px solid var(--border);
+      border-radius: 60px;
+      padding: 14px 36px;
+    }
+
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      display: none;
+    }
+
+    @media (min-width: 768px) { .nav-link { display: block; } }
+
+    /* HERO */
+    .hero {
+      background: var(--periwinkle);
+      margin: 0 16px;
+      border-radius: var(--radius-lg);
+      padding: 72px 40px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: var(--periwinkle-light);
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 140px; height: 140px;
+      background: var(--periwinkle-light);
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 40px;
+      padding: 8px 20px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(4px);
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(40px, 7.5vw, 80px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.75);
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* SECTION HEADING */
+    .section-heading {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 52px);
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      padding: 56px 32px 12px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--text-secondary);
+      padding: 0 32px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* EXPLAINER CARD */
+    .explainer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+    }
+
+    .explainer:first-of-type { padding-top: 48px; }
+
+    .explainer-card {
+      background: var(--cream-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      animation: fadeUp 0.6s ease both;
+      animation-delay: 0.08s;
+    }
+
+    .explainer-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .explainer-label.purple { color: var(--periwinkle); }
+    .explainer-label.red { color: var(--red); }
+    .explainer-label.green { color: var(--green); }
+
+    .explainer-text {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--black);
+      max-width: 720px;
+    }
+
+    .explainer-text strong { font-weight: 700; }
+
+    /* GOOD vs BAD COMPARISON */
+    .compare-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .compare-card {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .compare-card.bad {
+      background: var(--red-soft);
+      animation-delay: 0.1s;
+    }
+
+    .compare-card.good {
+      background: var(--green-soft);
+      animation-delay: 0.15s;
+    }
+
+    .compare-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .compare-badge {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 6px 16px;
+      border-radius: 10px;
+    }
+
+    .compare-card.bad .compare-badge {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .compare-card.good .compare-badge {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .compare-icon {
+      font-size: 24px;
+    }
+
+    .compare-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .compare-text {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--black);
+    }
+
+    .donts-list, .dos-list {
+      list-style: none;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .donts-list li, .dos-list li {
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .donts-list li {
+      background: rgba(217,65,48,0.08);
+    }
+
+    .dos-list li {
+      background: rgba(45,140,90,0.08);
+    }
+
+    .list-icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    /* EXAMPLE CTA CARDS */
+    .examples-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .example-card {
+      background: var(--cream-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .example-card:nth-child(1) { animation-delay: 0.1s; }
+    .example-card:nth-child(2) { animation-delay: 0.16s; }
+    .example-card:nth-child(3) { animation-delay: 0.22s; }
+
+    .example-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    .example-num {
+      position: absolute;
+      top: -14px;
+      left: 24px;
+      width: 30px;
+      height: 30px;
+      background: var(--green);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--white);
+    }
+
+    .example-quote {
+      font-size: 17px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--black);
+      margin-bottom: 14px;
+      min-height: 80px;
+    }
+
+    .example-why-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .example-why {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+
+    .example-badge {
+      display: inline-block;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      background: var(--lime-soft);
+      color: var(--green);
+    }
+
+    /* TLDR BANNER */
+
+    /* IMAGE COMPARISON */
+    .img-compare {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .img-compare-card {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .img-compare-card.bad { background: var(--red-soft); animation-delay: 0.12s; }
+    .img-compare-card.good { background: var(--green-soft); animation-delay: 0.18s; }
+
+    .img-compare-header {
+      padding: 20px 24px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .img-compare-badge {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 5px 14px;
+      border-radius: 10px;
+    }
+
+    .img-compare-card.bad .img-compare-badge {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .img-compare-card.good .img-compare-badge {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .img-compare-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
+      border-top: 2px solid var(--border);
+    }
+
+    .img-compare-placeholder {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-top: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: rgba(0,0,0,0.03);
+    }
+
+    .img-compare-placeholder-icon {
+      font-size: 36px;
+      opacity: 0.4;
+    }
+
+    .img-compare-placeholder-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+
+    .img-compare-bullets {
+      list-style: none;
+      padding: 14px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .img-compare-bullets li {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .img-compare-card.bad .img-compare-bullets li { color: var(--red); }
+    .img-compare-card.good .img-compare-bullets li { color: var(--green); }
+
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .img-compare-card.bad .bullet-dot { background: var(--red); }
+    .img-compare-card.good .bullet-dot { background: var(--green); }
+
+    @media (max-width: 768px) {
+      .img-compare { grid-template-columns: 1fr; padding: 0 12px 12px; }
+    }
+
+    /* TLDR BANNER */
+    .tldr {
+      background: var(--peach);
+      border-radius: var(--radius-lg);
+      max-width: 1100px;
+      margin: 8px 16px 0;
+      padding: 56px 48px;
+      text-align: center;
+      animation: fadeUp 0.7s ease both;
+      animation-delay: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 1132px) { .tldr { margin: 8px auto 0; } }
+
+    .tldr::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 160px; height: 160px;
+      background: rgba(0,0,0,0.04);
+      border-radius: 50%;
+    }
+
+    .tldr-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.5);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tldr h2 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(28px, 4.5vw, 48px);
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tldr p {
+      font-size: 16px;
+      color: rgba(26,26,26,0.6);
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 56px 32px 64px;
+    }
+
+    .footer-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .footer-text strong { color: var(--black); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { padding: 56px 24px 48px; margin: 0 12px; }
+      h1 { font-size: 44px; }
+      .section-heading { padding: 40px 20px 10px; }
+      .section-sub { padding: 0 20px 24px; }
+      .explainer { padding: 0 12px 12px; }
+      .explainer:first-of-type { padding-top: 36px; }
+      .compare-grid { grid-template-columns: 1fr; padding: 0 12px 12px; }
+      .examples-grid { grid-template-columns: 1fr; padding: 0 12px 24px; }
+      .tldr { padding: 40px 28px; margin-left: 12px; margin-right: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-pill">
+      <div class="nav-logo">zagged</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">Creator Guide</div>
       <h1>Proper Way of<br>Creating CTA Slide</h1>
-      <p class="hero-sub">The CTA is the most important slide in your content. Get it wrong and you lose the sale.</p>
+      <p class="hero-sub">The CTA is the most important slide in your content. Get it wrong and you lose the sale. Here's how to get it right.</p>
     </div>
   </section>
 
-  <div class="container" style="padding-top:48px;">
-    <div class="callout">
-      <div class="callout-label purple">📣 What Is a CTA?</div>
-      <p class="callout-text">A CTA means <strong>call to action</strong>. It's the moment in your content where you clearly tell people what action to take next. In our case, it's when you tell viewers where you bought the product you're talking about and guide them toward buying it too. This is one of the most important parts of the video, because <strong>without a CTA there is no direction for the viewer</strong> and no direction usually means no sales.</p>
+  <!-- WHAT IS A CTA -->
+  <div class="explainer" style="padding-top: 48px;">
+    <div class="explainer-card">
+      <div class="explainer-label purple">📣 What Is a CTA?</div>
+      <p class="explainer-text">A CTA means <strong>call to action</strong>. It's the moment in your content where you clearly tell people what action to take next. In our case, it's when you tell viewers where you bought the product you're talking about and guide them toward buying it too. This is one of the most important parts of the video, because <strong>without a CTA there is no direction for the viewer</strong> and no direction usually means no sales.</p>
     </div>
   </div>
 
-  <h2 class="sh">Bad CTA vs Good CTA</h2>
-  <p class="ss">One kills your organic feel. The other keeps it alive.</p>
+  <!-- BAD vs GOOD -->
+  <h2 class="section-heading">Bad CTA vs Good CTA</h2>
+  <p class="section-sub">One kills your organic feel. The other keeps it alive.</p>
 
-  <div class="container">
-    <div class="compare-grid">
-      <div class="compare-card bad">
-        <div class="compare-header">
-          <span class="compare-badge">Bad CTA</span>
-          <span>🚫</span>
-        </div>
-        <h3 class="compare-title">Breaks the<br>Organic Feel</h3>
-        <p style="font-size:14px;line-height:1.65;margin-bottom:10px;">A bad CTA is any CTA that breaks the organic feeling of the content. When you start mentioning things like "www", ".com", or "link in bio", the video suddenly feels like an advertisement.</p>
-        <p style="font-size:14px;line-height:1.65;">This immediately <strong>damages the trust</strong> you built during the video and can ruin the whole organic strategy.</p>
-        <ul class="bullet-list" style="margin-top:14px;">
-          <li><span class="li-icon">✕</span> Mentioning "www" or ".com"</li>
-          <li><span class="li-icon">✕</span> Saying "link in bio"</li>
-          <li><span class="li-icon">✕</span> Sounding like a sales pitch</li>
-          <li><span class="li-icon">✕</span> Breaking the natural flow of the video</li>
-        </ul>
+  <div class="compare-grid">
+    <div class="compare-card bad">
+      <div class="compare-header">
+        <span class="compare-badge">Bad CTA</span>
+        <span class="compare-icon">🚫</span>
       </div>
-      <div class="compare-card good">
-        <div class="compare-header">
-          <span class="compare-badge">Good CTA</span>
-          <span>✅</span>
-        </div>
-        <h3 class="compare-title">Keeps It<br>Natural</h3>
-        <p style="font-size:14px;line-height:1.65;margin-bottom:10px;">A good CTA does the opposite. It keeps the video feeling <strong>natural, authentic, and relatable</strong>. Instead of sounding like an ad, it sounds like a real person sharing their experience.</p>
-        <p style="font-size:14px;line-height:1.65;">Good CTAs often include authenticity, humor, emotion, or personal enthusiasm.</p>
-        <ul class="bullet-list" style="margin-top:14px;">
-          <li><span class="li-icon">✓</span> Sounds like a genuine reaction</li>
-          <li><span class="li-icon">✓</span> Uses humor or emotion</li>
-          <li><span class="li-icon">✓</span> Feels personal and enthusiastic</li>
-          <li><span class="li-icon">✓</span> Makes viewers want to find the product themselves</li>
-        </ul>
+      <h3 class="compare-title">Breaks the<br>Organic Feel</h3>
+      <p class="compare-text">A bad CTA is any CTA that breaks the organic feeling of the content. When you start mentioning things like "www", ".com", or "link in bio", the video suddenly feels like an advertisement.</p>
+      <p class="compare-text" style="margin-top: 10px;">This immediately <strong>damages the trust</strong> you built during the video and can ruin the whole organic strategy. The audience stops seeing it as a real recommendation and starts seeing it as a promotion.</p>
+      <ul class="donts-list">
+        <li><span class="list-icon">✕</span> Mentioning "www" or ".com"</li>
+        <li><span class="list-icon">✕</span> Saying "link in bio"</li>
+        <li><span class="list-icon">✕</span> Sounding like a sales pitch</li>
+        <li><span class="list-icon">✕</span> Breaking the natural flow of the video</li>
+      </ul>
+    </div>
+
+    <div class="compare-card good">
+      <div class="compare-header">
+        <span class="compare-badge">Good CTA</span>
+        <span class="compare-icon">✅</span>
       </div>
+      <h3 class="compare-title">Keeps It<br>Natural</h3>
+      <p class="compare-text">A good CTA does the opposite. It keeps the video feeling <strong>natural, authentic, and relatable</strong>. Instead of sounding like an ad, it sounds like a real person sharing their experience.</p>
+      <p class="compare-text" style="margin-top: 10px;">Good CTAs often include authenticity, humor, emotion, or personal enthusiasm — which keeps the audience engaged and curious.</p>
+      <ul class="dos-list">
+        <li><span class="list-icon">✓</span> Sounds like a genuine reaction</li>
+        <li><span class="list-icon">✓</span> Uses humor or emotion</li>
+        <li><span class="list-icon">✓</span> Feels personal and enthusiastic</li>
+        <li><span class="list-icon">✓</span> Makes viewers want to find the product themselves</li>
+      </ul>
     </div>
   </div>
 
-  <h2 class="sh">📸 CTA Slide Comparison</h2>
-  <p class="ss">See the difference side by side. Good CTAs keep it clean and bright. Bad ones feel cluttered and promotional.</p>
+  <!-- CTA SLIDE COMPARISON -->
+  <h2 class="section-heading">📸 CTA Slide Comparison</h2>
+  <p class="section-sub">See the difference side by side. Good CTAs keep it clean and bright. Bad ones feel cluttered and promotional.</p>
 
-  <div class="container">
-    <div class="img-compare">
-      <div class="img-compare-card good">
-        <div class="img-compare-header">
-          <span class="img-compare-badge">Good CTA</span>
-          <span>✅</span>
-        </div>
-        <div class="img-compare-placeholder">
-          <span class="img-compare-placeholder-icon">🖼️</span>
-          <span class="img-compare-placeholder-text">Add Good CTA Image</span>
-        </div>
-        <ul class="img-compare-bullets">
-          <li><span class="img-bullet-dot"></span> Product is clear</li>
-          <li><span class="img-bullet-dot"></span> Image is bright</li>
-          <li><span class="img-bullet-dot"></span> Text is readable</li>
-        </ul>
+  <div class="img-compare">
+    <div class="img-compare-card good">
+      <div class="img-compare-header">
+        <span class="img-compare-badge">Good CTA</span>
+        <span>✅</span>
       </div>
-      <div class="img-compare-card bad">
-        <div class="img-compare-header">
-          <span class="img-compare-badge">Bad CTA</span>
-          <span>🚫</span>
-        </div>
-        <div class="img-compare-placeholder">
-          <span class="img-compare-placeholder-icon">🖼️</span>
-          <span class="img-compare-placeholder-text">Add Bad CTA Image</span>
-        </div>
-        <ul class="img-compare-bullets">
-          <li><span class="img-bullet-dot"></span> Text blocking / emojis not readable</li>
-          <li><span class="img-bullet-dot"></span> Dark image</li>
-          <li><span class="img-bullet-dot"></span> Feels like an ad</li>
-        </ul>
+      <img src="https://i.ibb.co/rfygJy9Y/643711419-1567919847648145-1042494099523584377-n.png" class="img-compare-img" alt="Good CTA example">
+      <ul class="img-compare-bullets">
+        <li><span class="bullet-dot"></span> Product is clear</li>
+        <li><span class="bullet-dot"></span> Has a clear CTA</li>
+        <li><span class="bullet-dot"></span> Text is readable</li>
+      </ul>
+    </div>
+
+    <div class="img-compare-card bad">
+      <div class="img-compare-header">
+        <span class="img-compare-badge">Bad CTA</span>
+        <span>🚫</span>
       </div>
+      <img src="https://cdn.discordapp.com/attachments/1390812385144471742/1481400407191195878/image.png?ex=69b32d24&is=69b1dba4&hm=e33daac54523fcf7c82cb77eb7e9640e0f4069ea3a3d209502f8436a7d0544ba" class="img-compare-img" alt="Bad CTA example">
+      <ul class="img-compare-bullets">
+        <li><span class="bullet-dot"></span> Text not readable</li>
+        <li><span class="bullet-dot"></span> No Clear CTA</li>
+        <li><span class="bullet-dot"></span> Just said the info about the product</li>
+      </ul>
     </div>
   </div>
 
-  <h2 class="sh">✅ Good CTA Examples</h2>
-  <p class="ss">These feel like a genuine reaction, not a sales pitch — which makes people much more likely to trust the recommendation.</p>
+  <!-- EXAMPLES -->
+  <h2 class="section-heading">✅ Good CTA Examples</h2>
+  <p class="section-sub">These feel like a genuine reaction, not a sales pitch — which makes people much more likely to trust the recommendation and look for the product themselves.</p>
 
-  <div class="container">
-    <div class="examples-grid">
-      <article class="example-card" style="animation-delay:0.1s">
-        <div class="example-num">1</div>
-        <p class="example-quote">"i'm purchasing this product on their website till i'm 90 years old"</p>
-        <div class="example-why-label">Why It Works</div>
-        <p class="example-why">Exaggeration signals genuine love. It's funny, personal, and makes the product sound like a must-have without any promo language.</p>
-        <span class="rule-badge badge-lime" style="margin-top:12px;">Lifetime Loyalty</span>
-      </article>
-      <article class="example-card" style="animation-delay:0.16s">
-        <div class="example-num">2</div>
-        <p class="example-quote">"it's sooooo affordable on their website"</p>
-        <div class="example-why-label">Why It Works</div>
-        <p class="example-why">Stretching the word shows real excitement. Mentions price without making it sound like a promo — feels like sharing a secret deal.</p>
-        <span class="rule-badge badge-lime" style="margin-top:12px;">Hype + Value</span>
-      </article>
-      <article class="example-card" style="animation-delay:0.22s">
-        <div class="example-num">3</div>
-        <p class="example-quote">"the only bad thing is that this product is always sold out on their website"</p>
-        <div class="example-why-label">Why It Works</div>
-        <p class="example-why">A "complaint" that's actually a flex. Scarcity + demand signals make the product feel exclusive and desirable.</p>
-        <span class="rule-badge badge-lime" style="margin-top:12px;">Reverse Psychology</span>
-      </article>
-    </div>
+  <div class="examples-grid">
+    <article class="example-card">
+      <div class="example-num">1</div>
+      <p class="example-quote">"i'm purchasing this product on their website till i'm 90 years old"</p>
+      <div class="example-why-label">Why It Works</div>
+      <p class="example-why">Exaggeration signals genuine love. It's funny, personal, and makes the product sound like a must-have without any promo language.</p>
+      <span class="example-badge">Lifetime Loyalty</span>
+    </article>
+
+    <article class="example-card">
+      <div class="example-num">2</div>
+      <p class="example-quote">"it's sooooo affordable on their website"</p>
+      <div class="example-why-label">Why It Works</div>
+      <p class="example-why">Stretching the word shows real excitement. Mentions price without making it sound like a promo — feels like sharing a secret deal.</p>
+      <span class="example-badge">Hype + Value</span>
+    </article>
+
+    <article class="example-card">
+      <div class="example-num">3</div>
+      <p class="example-quote">"the only bad thing is that this product is always sold out on their website"</p>
+      <div class="example-why-label">Why It Works</div>
+      <p class="example-why">A "complaint" that's actually a flex. Scarcity + demand signals make the product feel exclusive and desirable.</p>
+      <span class="example-badge">Reverse Psychology</span>
+    </article>
   </div>
 
   <section class="banner peach">
