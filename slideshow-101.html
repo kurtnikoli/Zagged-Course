@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slideshow Aesthetics 101 — Zagged</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* SLIDESHOW-SPECIFIC */
+    .toc-card {
+      background: var(--cream-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      animation: fadeUp 0.6s ease both;
+      animation-delay: 0.08s;
+    }
+    .toc-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--periwinkle);
+      margin-bottom: 16px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .toc-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--white);
+      border-radius: 12px;
+      border: 1.5px solid rgba(0,0,0,0.06);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .toc-num {
+      width: 26px; height: 26px;
+      background: var(--periwinkle);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .slide-section-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+    .slide-header-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 4px;
+    }
+    .slide-col-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .slide-col-label.good { background: var(--green); color: var(--white); }
+    .slide-col-label.bad { background: var(--red); color: var(--white); }
+    .slide-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .slide-example {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .slide-example:hover { transform: translateY(-2px); }
+    .slide-example.good-border { background: var(--green-soft); }
+    .slide-example.bad-border { background: var(--red-soft); }
+    .slide-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
+      border-bottom: 2px solid var(--border);
+    }
+    .slide-bullets {
+      padding: 14px 18px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .slide-bullets li {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .slide-example.good-border .slide-bullets li { color: var(--green); }
+    .slide-example.bad-border .slide-bullets li { color: var(--red); }
+    .sdot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .slide-example.good-border .sdot { background: var(--green); }
+    .slide-example.bad-border .sdot { background: var(--red); }
+    .methods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .method-card {
+      background: var(--cream-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px 28px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeUp 0.6s ease both;
+    }
+    .method-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .method-emoji { font-size: 36px; margin-bottom: 14px; display: block; }
+    .method-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .method-text { font-size: 14px; line-height: 1.6; color: var(--muted); }
+    .method-steps {
+      list-style: none;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .method-steps li {
+      font-size: 13px;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 10px;
+      background: var(--white);
+      border-radius: 8px;
+    }
+    .step-num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      color: var(--periwinkle);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .check-item {
+      background: var(--cream-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .check-box {
+      width: 24px; height: 24px;
+      border: 2px solid var(--border);
+      border-radius: 7px;
+      flex-shrink: 0;
+      background: var(--white);
+      margin-top: 1px;
+    }
+    .check-text { font-size: 15px; line-height: 1.55; font-weight: 500; }
+    @media (max-width: 768px) {
+      .slide-row { grid-template-columns: 1fr; }
+      .slide-header-row { grid-template-columns: 1fr; }
+      .methods-grid { grid-template-columns: 1fr; }
+      .checklist-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-pill">
+      <a href="index.html" class="nav-logo">zagged</a>
+      <a href="index.html" class="nav-back">← Back to Course</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">Module 02</div>
+      <h1>Slideshow<br>Aesthetics 101</h1>
+      <p class="hero-sub">Master the visual side of TikTok slideshows. Perfect images + proper formatting = effortless virality.</p>
+    </div>
+  </section>
+
+  <div class="container" style="padding-top:48px; padding-bottom:16px;">
+    <div class="toc-card">
+      <div class="toc-label">What We'll Cover</div>
+      <div class="toc-grid">
+        <div class="toc-item"><span class="toc-num">1</span> Why Aesthetics Matter</div>
+        <div class="toc-item"><span class="toc-num">2</span> The Basics</div>
+        <div class="toc-item"><span class="toc-num">3</span> Good vs Bad Slides</div>
+        <div class="toc-item"><span class="toc-num">4</span> Image/Text Congruency</div>
+        <div class="toc-item"><span class="toc-num">5</span> Finding Good Images</div>
+        <div class="toc-item"><span class="toc-num">6</span> Improving Images</div>
+        <div class="toc-item"><span class="toc-num">7</span> Quick Checklist</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <h2 class="sh">1. Why Aesthetics Matter</h2>
+  <p class="ss">You can have the best hook ever — but if the image is bad, it won't matter.</p>
+  <div class="container">
+    <div class="callout">
+      <div class="callout-label purple">⚡ The Core Truth</div>
+      <p class="callout-text"><strong>Viral slides = emotion sparking + aesthetically pleasing to watch.</strong> You need PERFECT images on every slide — there is no reason not to. Once you master this, it's almost effortless to go viral.</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <h2 class="sh">2. The Basics</h2>
+  <p class="ss">Three non-negotiable rules for slides that look professional.</p>
+  <div class="container">
+    <div class="rules-grid">
+      <article class="rule-card" style="animation-delay:0.08s">
+        <div class="rule-num">1</div>
+        <span class="rule-emoji">📐</span>
+        <h3 class="rule-title">Image Size</h3>
+        <p class="rule-text">Always use <strong>3:4 ratio</strong>. Don't use 9:16 or 1:1 — it looks bad and scrolls weird.</p>
+        <span class="rule-badge badge-purple">3:4 Only</span>
+      </article>
+      <article class="rule-card" style="animation-delay:0.14s">
+        <div class="rule-num">2</div>
+        <span class="rule-emoji">🔤</span>
+        <h3 class="rule-title">Fonts</h3>
+        <p class="rule-text">Only use TikTok's <strong>"Classic" font</strong>. No exceptions. Every other font looks off.</p>
+        <span class="rule-badge badge-red">Classic Only</span>
+      </article>
+      <article class="rule-card" style="animation-delay:0.20s">
+        <div class="rule-num">3</div>
+        <span class="rule-emoji">📏</span>
+        <h3 class="rule-title">Text Placement</h3>
+        <p class="rule-text">Keep text away from faces/products. Use the <strong>Rule of Thirds</strong>. Text goes top or middle — never bottom.</p>
+        <span class="rule-badge badge-green">Rule of Thirds</span>
+      </article>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card good">
+        <div class="compare-header"><span class="compare-badge">Do ✅</span></div>
+        <ul class="bullet-list">
+          <li><span class="li-icon">✓</span> Put text near the top lines</li>
+          <li><span class="li-icon">✓</span> Leave space around the product</li>
+          <li><span class="li-icon">✓</span> Text above the product, not covering it</li>
+          <li><span class="li-icon">✓</span> Easy to read + keeps focus on product</li>
+        </ul>
+      </div>
+      <div class="compare-card bad">
+        <div class="compare-header"><span class="compare-badge">Don't ❌</span></div>
+        <ul class="bullet-list">
+          <li><span class="li-icon">✕</span> Don't put text in the bottom row</li>
+          <li><span class="li-icon">✕</span> Bottom text gets blocked by TikTok UI</li>
+          <li><span class="li-icon">✕</span> Don't cover usernames or buttons</li>
+          <li><span class="li-icon">✕</span> Don't overlap the main subject</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <h2 class="sh">3. Good vs Bad Slides</h2>
+  <p class="ss">Side-by-side examples for Hook, Body, and CTA slides.</p>
+  <div class="container">
+    <div class="slide-section-label">🪝 Hook Slide</div>
+    <div class="slide-header-row"><div><span class="slide-col-label good">Good</span></div><div><span class="slide-col-label bad">Bad</span></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fd1b1e458-4ab5-4121-bc70-fa0474460327%2FUntitled.png?table=block&id=25324404-a48a-8114-8a50-d596d7a574a1&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=460&userId=&cache=v2" class="slide-img" alt="Good hook 1"><ul class="slide-bullets"><li><span class="sdot"></span> High quality picture</li><li><span class="sdot"></span> Text doesn't block face</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F6740b208-bd6c-403c-b01e-99c6591c9a61%2FUntitled.png?table=block&id=25324404-a48a-81c9-998c-f0c76fca02b8&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=480&userId=&cache=v2" class="slide-img" alt="Bad hook 1"><ul class="slide-bullets"><li><span class="sdot"></span> Bad example</li></ul></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F46324b89-3cc3-4ce6-b64c-55f69c229361%2FUntitled.png?table=block&id=25324404-a48a-81ba-b0c9-c161d056778c&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=460&userId=&cache=v2" class="slide-img" alt="Good hook 2"><ul class="slide-bullets"><li><span class="sdot"></span> Clear faces at top</li><li><span class="sdot"></span> Text at bottom</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fe7ef9d8e-80f0-43e8-b31d-b8dc4698cf00%2FUntitled.png?table=block&id=25324404-a48a-812f-be01-d3ea1d886af8&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=480&userId=&cache=v2" class="slide-img" alt="Bad hook 2"><ul class="slide-bullets"><li><span class="sdot"></span> Low quality pic</li><li><span class="sdot"></span> Text covering face</li></ul></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F2bc9e664-df1e-4bdb-9c1a-6cbf1501014c%2FUntitled.png?table=block&id=25324404-a48a-8180-9e6a-c18d2924afbc&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=470&userId=&cache=v2" class="slide-img" alt="Good hook 3"><ul class="slide-bullets"><li><span class="sdot"></span> Bright photo</li><li><span class="sdot"></span> Great text sizing</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Ffe343080-4768-4ef2-a8ef-d68b4b891fe2%2FUntitled.png?table=block&id=25324404-a48a-81c9-bf43-e6b8bdb5c168&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=480&userId=&cache=v2" class="slide-img" alt="Bad hook 3"><ul class="slide-bullets"><li><span class="sdot"></span> Person not up close</li><li><span class="sdot"></span> Text not aesthetic</li></ul></div></div>
+    <div class="slide-row" style="margin-bottom:28px;"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F218806ea-68c6-4845-9a34-4fff0305ea73%2FUntitled.png?table=block&id=25324404-a48a-81ac-98ed-c45ffe805423&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=460&userId=&cache=v2" class="slide-img" alt="Good hook 4"><ul class="slide-bullets"><li><span class="sdot"></span> No dead space</li><li><span class="sdot"></span> Aesthetically pleasing</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F21531950-d45e-4f2c-bd08-9af4918c7c76%2FUntitled.png?table=block&id=25324404-a48a-817b-9bee-c6e40ac1acc7&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=480&userId=&cache=v2" class="slide-img" alt="Bad hook 4"><ul class="slide-bullets"><li><span class="sdot"></span> Nothing at the top</li><li><span class="sdot"></span> Text too big</li></ul></div></div>
+
+    <div class="slide-section-label">📄 Body Slides</div>
+    <div class="slide-header-row"><div><span class="slide-col-label good">Good</span></div><div><span class="slide-col-label bad">Bad</span></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F60c1c365-3770-4116-9efa-ac55bc2dd8b6%2FUntitled.png?table=block&id=25324404-a48a-81b2-a141-cde6c4d96753&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Good body 1"><ul class="slide-bullets"><li><span class="sdot"></span> Organic image</li><li><span class="sdot"></span> Text not blocking focus</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fbf90926a-2147-44fd-8642-e06ed5492682%2FUntitled.png?table=block&id=25324404-a48a-8172-b0b0-cd37e1cc3089&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Bad body 1"><ul class="slide-bullets"><li><span class="sdot"></span> Looks like a photoshoot</li><li><span class="sdot"></span> Text blocking focus</li></ul></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fffd8586e-8dbb-4e0c-8b32-4927d45ec133%2FUntitled.png?table=block&id=25324404-a48a-81ac-b094-c98b2fe45b85&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Good body 2"><ul class="slide-bullets"><li><span class="sdot"></span> High quality</li><li><span class="sdot"></span> Looks natural</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Ff466f922-7f37-4a4c-b4d6-22a8fea40ff0%2FUntitled.png?table=block&id=25324404-a48a-816e-96fc-ee134d4800d4&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Bad body 2"><ul class="slide-bullets"><li><span class="sdot"></span> Magazine look</li><li><span class="sdot"></span> Low quality / bland</li></ul></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F6570021c-232f-4409-83e6-82bf770d1eab%2FUntitled.png?table=block&id=25324404-a48a-818d-a776-c9600ca63877&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Good body 3"><ul class="slide-bullets"><li><span class="sdot"></span> Bright image</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fcb09e5e7-ce64-4a71-9dcf-3478b0f0094d%2FUntitled.png?table=block&id=25324404-a48a-8183-ab50-cb44d4ec7a67&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Bad body 3"><ul class="slide-bullets"><li><span class="sdot"></span> Dull / boring</li></ul></div></div>
+    <div class="slide-row" style="margin-bottom:28px;"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F3448b389-4786-46d0-989e-f1bba4bb6da1%2FUntitled.png?table=block&id=25324404-a48a-8121-a5e4-c45d374bdf1c&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Good body 4"><ul class="slide-bullets"><li><span class="sdot"></span> Text doesn't block product</li><li><span class="sdot"></span> Native TikTok font</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F70371fd4-cb29-4f4d-bb67-a86f3d2f1253%2FUntitled.png?table=block&id=25324404-a48a-8155-8b24-fddd8bc6bf77&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Bad body 4"><ul class="slide-bullets"><li><span class="sdot"></span> Text covering product</li><li><span class="sdot"></span> Wrong font</li></ul></div></div>
+
+    <div class="slide-section-label">📣 CTA Slide</div>
+    <div class="slide-header-row"><div><span class="slide-col-label good">Good</span></div><div><span class="slide-col-label bad">Bad</span></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fcafe47d8-ba73-48f3-a463-c22a32d545e2%2FUntitled.png?table=block&id=25324404-a48a-81ea-a221-f6fb56ddfb0a&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Good CTA 1"><ul class="slide-bullets"><li><span class="sdot"></span> Product is clear</li><li><span class="sdot"></span> Image is bright</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F6057be13-d5aa-4b18-b735-0c607d9966be%2FUntitled.png?table=block&id=25324404-a48a-818c-9537-df29b953925a&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Bad CTA 1"><ul class="slide-bullets"><li><span class="sdot"></span> Text blocking</li><li><span class="sdot"></span> Dark image</li></ul></div></div>
+    <div class="slide-row"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fa8c808eb-449c-44c2-a29a-54d30185ef26%2FUntitled.png?table=block&id=25324404-a48a-8172-90af-f0d13e605208&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Good CTA 2"><ul class="slide-bullets"><li><span class="sdot"></span> Product is clear</li><li><span class="sdot"></span> Text is readable</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F0dc765e5-bf27-425d-8694-4330023a8d6d%2FUntitled.png?table=block&id=25324404-a48a-81a3-9015-e3ac59ae84e9&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Bad CTA 2"><ul class="slide-bullets"><li><span class="sdot"></span> No product shown</li><li><span class="sdot"></span> No call to action</li></ul></div></div>
+    <div class="slide-row" style="margin-bottom:28px;"><div class="slide-example good-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2Fba4b44c5-c3be-4e21-8488-1d2c1a5da439%2FUntitled.png?table=block&id=25324404-a48a-816e-9095-ef53da0e8323&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Good CTA 3"><ul class="slide-bullets"><li><span class="sdot"></span> Angled for text space</li><li><span class="sdot"></span> Bright, high quality</li></ul></div><div class="slide-example bad-border"><img src="https://substantial-ski-36b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F776bfede-c137-47eb-a99c-d348e1412883%2F90e42051-3cb4-41fc-89e4-1d4c24c9f74d%2FUntitled.png?table=block&id=25324404-a48a-8107-8393-d2b837032501&spaceId=54424404-a48a-81cb-ac4f-000394814e1a&width=660&userId=&cache=v2" class="slide-img" alt="Bad CTA 3"><ul class="slide-bullets"><li><span class="sdot"></span> Hard to read</li><li><span class="sdot"></span> Multiple text colors</li></ul></div></div>
+  </div>
+
+  <!-- 4 -->
+  <h2 class="sh">4. Keeping Everything Consistent</h2>
+  <p class="ss">Your slides should feel like they belong together.</p>
+  <div class="container">
+    <div class="compare-grid">
+      <div class="compare-card good">
+        <div class="compare-header"><span class="compare-badge">Good Congruency ✅</span></div>
+        <ul class="bullet-list">
+          <li><span class="li-icon">✓</span> Text in the same location each slide</li>
+          <li><span class="li-icon">✓</span> Same size and style throughout</li>
+          <li><span class="li-icon">✓</span> Images congruent to the story</li>
+        </ul>
+      </div>
+      <div class="compare-card bad">
+        <div class="compare-header"><span class="compare-badge">Bad Congruency ❌</span></div>
+        <ul class="bullet-list">
+          <li><span class="li-icon">✕</span> Video is all over the place</li>
+          <li><span class="li-icon">✕</span> Text in different places / styles</li>
+          <li><span class="li-icon">✕</span> Images not congruent at all</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <h2 class="sh">5. Where to Find Good Images</h2>
+  <p class="ss">Three methods to source high-quality, organic-looking images.</p>
+  <div class="container">
+    <div class="methods-grid">
+      <article class="method-card" style="animation-delay:0.08s">
+        <span class="method-emoji">📌</span>
+        <h3 class="method-title">Pinterest Method</h3>
+        <p class="method-text">Use "aesthetic" after your keyword. Don't just search "pizza" — search <strong>"italy pizza aesthetic"</strong>.</p>
+        <ul class="method-steps">
+          <li><span class="step-num">01</span> Search keyword + "aesthetic"</li>
+          <li><span class="step-num">02</span> Pick bright, vibrant, high quality</li>
+          <li><span class="step-num">03</span> Look for text space</li>
+          <li><span class="step-num">04</span> SCREENSHOT — don't save</li>
+        </ul>
+        <span class="rule-badge badge-green">Best Method</span>
+      </article>
+      <article class="method-card" style="animation-delay:0.14s">
+        <span class="method-emoji">🔍</span>
+        <h3 class="method-title">Reddit / Google / IG</h3>
+        <p class="method-text">Instagram for travel/organic pics. Reddit for niche specific shots like before-and-after.</p>
+        <ul class="method-steps">
+          <li><span class="step-num">01</span> Instagram for lifestyle</li>
+          <li><span class="step-num">02</span> Google for general</li>
+          <li><span class="step-num">03</span> Reddit for niche</li>
+        </ul>
+        <span class="rule-badge badge-orange">Good Backup</span>
+      </article>
+      <article class="method-card" style="animation-delay:0.20s">
+        <span class="method-emoji">🤖</span>
+        <h3 class="method-title">AI Method</h3>
+        <p class="method-text">Upload a reference to ChatGPT, get a Midjourney prompt, then refine until 99% real.</p>
+        <ul class="method-steps">
+          <li><span class="step-num">01</span> Find reference photo</li>
+          <li><span class="step-num">02</span> ChatGPT → Midjourney prompt</li>
+          <li><span class="step-num">03</span> Edit prompt details</li>
+          <li><span class="step-num">04</span> Iterate in Midjourney</li>
+        </ul>
+        <span class="rule-badge badge-purple">Advanced</span>
+      </article>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <h2 class="sh">6. Improving Bad Images</h2>
+  <p class="ss">Low quality photo? Upscale it before you use it.</p>
+  <div class="container">
+    <div class="callout">
+      <div class="callout-label green">🔧 Quick Fix</div>
+      <p class="callout-text">Use free tools like <strong>upscale.media</strong> to make images look better. Never post a blurry image — there's no excuse.</p>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <h2 class="sh">7. Quick Checklist</h2>
+  <p class="ss">Run through this before you post. Every time.</p>
+  <div class="container">
+    <div class="checklist-grid">
+      <div class="check-item"><div class="check-box"></div><span class="check-text">Is every slide <strong>3:4</strong>?</span></div>
+      <div class="check-item"><div class="check-box"></div><span class="check-text">Only using TikTok's <strong>"Classic" font</strong>?</span></div>
+      <div class="check-item"><div class="check-box"></div><span class="check-text">Text <strong>not blocking</strong> the main subject?</span></div>
+      <div class="check-item"><div class="check-box"></div><span class="check-text">All images <strong>high quality</strong> and support the story?</span></div>
+      <div class="check-item"><div class="check-box"></div><span class="check-text">Everything <strong>consistent</strong> across slides?</span></div>
+      <div class="check-item"><div class="check-box"></div><span class="check-text">No random or <strong>off-brand</strong> pics?</span></div>
+    </div>
+  </div>
+
+  <section class="banner peach">
+    <div class="banner-text">
+      <h2>Aesthetics Down.<br>Now Learn CTAs.</h2>
+      <p>You know how to make slides look great. Next up: making the CTA convert.</p>
+    </div>
+    <a href="cta-guide.html" class="banner-cta">Module 03 →</a>
+  </section>
+
+  <footer class="footer">
+    <p class="footer-text">Made by <strong>zagged</strong></p>
+  </footer>
+</body>
+</html>
